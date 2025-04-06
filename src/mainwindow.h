@@ -37,8 +37,8 @@ private:
     QPushButton *song_activity;
     QWidget *buttonContainer;
     // Image handling
-    QIcon *pause;
-    QIcon *play;
+    QIcon pause;
+    QIcon play;
     QIcon skip_forward_icon;
     QIcon skip_backward_icon;
     

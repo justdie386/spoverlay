@@ -106,9 +106,9 @@ void song::get_song() {
     this->album_url = content["item"]["album"]["images"][2]["url"];
     this->song_uri = content["item"]["uri"];
     this->is_playing = content["is_playing"];
-    
     this->album_data = get_album_cover();
-    cout << res->body << endl;
+    this->song_current_lenght = content["progress_ms"];
+    this->song_lenght = content["item"]["duration_ms"];
   }
 }
 string song::get_album_cover() {
@@ -162,10 +162,5 @@ void credentials::pause()
   {
     this->client_id = client_id;
     this->secret_id = secret_id;
-  }
-  // even tho you can get the song lenght from the currently playing, skipping songs will cause not knowing what the hell is currently playing
-  int credentials::get_song_lenght()
-  {
-
   }
 }; // namespace spotifypp

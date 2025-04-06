@@ -44,10 +44,8 @@ class credentials {
             string album_url;
             string album_data;
             string song_uri;
-            // gets the total lenght of the song
-            int song_lenght;
-            // gets where the song is at
-            int song_current_lenght;
+            float song_lenght;
+            float song_current_lenght;
             bool is_playing;
             song(string access_token);
             string get_album_cover();

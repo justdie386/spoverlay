@@ -8,17 +8,20 @@
 
 int main(int argc, char **argv) {
 
+// Store the config.json to AppData/Roaming/spoverlay on windows and ~/.config/spoverlay on unix
+// TODO store safely those credentials, no idea how tho.
 
 #ifdef _WIN32
+
   string home = getenv("APPDATA");
   string path = string(home) + "/spoverlay";
+
 #else
 
 string home = getenv("HOME");
 string path = string(home) + "/.config/spoverlay";
 
 #endif
-
 
   cout << path << endl;
   if (argc > 1) {
@@ -28,7 +31,6 @@ string path = string(home) + "/.config/spoverlay";
     }
   }
   spotifypp::credentials creds;
-  cout << path + "/config.json"<< endl;
   if (std::filesystem::exists(path + "/config.json") == true) {
 
     creds.read_config(path + "/config.json");
@@ -38,7 +40,7 @@ string path = string(home) + "/.config/spoverlay";
     w.setWindowFlags(Qt::WindowStaysOnTopHint | Qt::WindowCloseButtonHint |
                      Qt::FramelessWindowHint);
     w.show();
-    w.setFixedSize(90, 69);
+    w.setFixedSize(84, 69);
     return a.exec();
   } else {
     if (filesystem::exists(path) == false) {
