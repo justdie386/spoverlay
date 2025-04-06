@@ -10,6 +10,8 @@
 #include <QImage>
 #include <QPalette>
 #include <QMouseEvent>  // Added for mouse events
+#include <QProgressBar>
+#include "qprogressbar.h"
 #include "spotifypp.h"
 
 class mainwindow : public QMainWindow {
@@ -33,7 +35,7 @@ private:
     QPushButton *skip_forward;
     QPushButton *skip_backward;
     QPushButton *song_activity;
-
+    QWidget *buttonContainer;
     // Image handling
     QIcon *pause;
     QIcon *play;
@@ -45,6 +47,8 @@ private:
     spotifypp::song song;
     bool isplaying;
 
+    // Well...
+    QProgressBar *bar;
     QPoint m_pCursor;   
 
 

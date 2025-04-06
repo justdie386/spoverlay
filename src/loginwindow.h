@@ -27,6 +27,7 @@
         spotifypp::credentials creds;
         string client_id;
         string secret_id;
+        string path;
     private slots:
         void login_pressed();
     };

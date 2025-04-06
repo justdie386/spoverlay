@@ -1,29 +1,13 @@
 #include "spotifypp.h"
 #include "base64.hpp"
 #include "httplib.h"
-#include <filesystem>
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <string>
 
 namespace spotifypp {
 
-// keeping it around, but its not really used anymore, does too much at once, not flexible enough
-void credentials::get_credentials(string client_id, string secret_id) {
-  this->client_id = client_id;
-  this->secret_id = secret_id;
-  if (std::filesystem::exists("config.json") == true) {
-    cout << "Found config.json" << endl;
-    read_config();
-    use_refresh_token();
-  } else {
-    cout << "Config file not found" << endl;
-    get_auth();
-    convert_to_base64();
-    get_access_n_refresh();
-    create_config();
-  }
-}
+
 void credentials::convert_to_base64() {
   string encoded_id;
   encoded_id = this->client_id + ":" + this->secret_id;
@@ -74,8 +58,8 @@ void credentials::get_auth() {
   this->auth_token = authorization_code;
 }
 
-void credentials::create_config() {
-  ofstream config("config.json");
+void credentials::create_config(string path) {
+  ofstream config(path);
   nlohmann::json file;
   file["client_id"] = this->client_id;
   file["encoded_id"] = this->base64_id;
@@ -84,8 +68,8 @@ void credentials::create_config() {
   cout << "Created config file" << endl;
   config.close();
 }
-void credentials::read_config() {
-  ifstream config("config.json");
+void credentials::read_config(string path) {
+  ifstream config(path);
   nlohmann::json file = nlohmann::json::parse(config);
   this->refresh_token = file["refresh_token"];
   this->base64_id = file["encoded_id"];
@@ -122,7 +106,9 @@ void song::get_song() {
     this->album_url = content["item"]["album"]["images"][2]["url"];
     this->song_uri = content["item"]["uri"];
     this->is_playing = content["is_playing"];
+    
     this->album_data = get_album_cover();
+    cout << res->body << endl;
   }
 }
 string song::get_album_cover() {
@@ -176,5 +162,10 @@ void credentials::pause()
   {
     this->client_id = client_id;
     this->secret_id = secret_id;
+  }
+  // even tho you can get the song lenght from the currently playing, skipping songs will cause not knowing what the hell is currently playing
+  int credentials::get_song_lenght()
+  {
+
   }
 }; // namespace spotifypp

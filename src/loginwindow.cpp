@@ -2,6 +2,7 @@
 #include "qboxlayout.h"
 #include "qlineedit.h"
 #include "qpushbutton.h"
+#include <stdlib.h>
 #include <QLayout>
 #include <QDesktopServices>
 
@@ -44,6 +45,7 @@ loginwindow::loginwindow(spotifypp::credentials creds, QWidget *parent)
         this->creds.get_auth();
         this->creds.convert_to_base64();
         this->creds.get_access_n_refresh();
-        this->creds.create_config();
+        cout << this->path << endl;
+        this->creds.create_config(this->path);
         this->close();
     }
